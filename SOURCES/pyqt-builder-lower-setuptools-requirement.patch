@@ -1,0 +1,30 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 6d3f7cf..a6a487a 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,7 +1,7 @@
+ # The project configuration for PyQt-builder.
+ 
+ [build-system]
+-requires = ["setuptools>=77", "setuptools_scm>=8"]
++requires = ["setuptools>=69", "setuptools_scm>=8"]
+ build-backend = "setuptools.build_meta"
+ 
+ [tool.setuptools_scm]
+@@ -14,8 +14,6 @@ readme = "README.md"
+ urls.homepage = "https://github.com/Python-PyQt/PyQt-builder"
+ dependencies = ["packaging", "sip >=6.7, <7"]
+ requires-python = ">=3.8"
+-license = "BSD-2-Clause"
+-license-files = ["LICENSE"]
+ dynamic = ["version"]
+ 
+ [[project.authors]]
+@@ -25,3 +23,7 @@ email = "phil@riverbankcomputing.com"
+ [project.scripts]
+ pyqt-bundle = "pyqtbuild.bundle.bundle_main:main"
+ pyqt-qt-wheel = "pyqtbuild.bundle.qt_wheel_main:main"
++
++[project.license]
++text = "BSD-2-Clause"
++files = ["LICENSE"]

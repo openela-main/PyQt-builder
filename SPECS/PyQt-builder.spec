@@ -1,13 +1,16 @@
 %global pypi_name pyqt_builder
 
 Name:           PyQt-builder
-Version:        1.17.0
+Version:        1.19.0
 Release:        1%{?dist}
 Summary:        The PEP 517 compliant PyQt build system
 
 License:        BSD-2-Clause
 URL:            https://www.riverbankcomputing.com/software/pyqt/
 Source0:        %{pypi_source}
+
+Patch:          pyqt-builder-lower-setuptools-requirement.patch
+
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
@@ -32,22 +35,26 @@ rm -rf %{pypi_name}.egg-info
 
 %install
 %pyproject_install
+%pyproject_save_files pyqtbuild
 # These dll files are from openssl and microsoft visiual studio
-# While we can redistribute them, we don't have source and it's 
+# While we can redistribute them, we don't have source and it's
 # unlikely anyone will want to bundle a windows executable from linux.
 rm -rf %{buildroot}/%{python3_sitelib}/pyqtbuild/bundle/dlls
+sed -r -i '/\/pyqtbuild\/bundle\/dlls/d' %{pyproject_files}
 
 %check
 %py3_check_import pyqtbuild
 
-%files
+%files -f %{pyproject_files}
 %license LICENSE
 %{_bindir}/pyqt-bundle
 %{_bindir}/pyqt-qt-wheel
-%{python3_sitelib}/pyqtbuild
-%{python3_sitelib}/PyQt_builder-%{version}.dist-info
 
 %changelog
+* Tue Dec 02 2025 Jan Grulich <jgrulich@redhat.com> - 1.19.0-1
+- 1.19.0
+  Resolves: RHEL-109197
+
 * Mon Dec 09 2024 Jan Grulich <jgrulich@redhat.com> - 1.17.0-1
 - 1.17.0
   Resolves: RHEL-70412
